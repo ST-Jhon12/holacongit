@@ -1,6 +1,7 @@
-from tkinter import ttk
+from tkinter import messagebox, ttk
 import tkinter as tk
 
+from views.sistema_principal import SistemaPrincipal
 
 class login(ttk.Frame):
     def __init__(self, ventana):
@@ -40,6 +41,29 @@ class login(ttk.Frame):
             padx=10,
             pady=6,
         )
+
+        def Ingresar():
+            try:
+                if (
+                    self.user.get() == ""
+                            and self.pas.get() == ""
+                        ):
+                    messagebox.showinfo(
+                        "Aviso", "No cajas en blanco, por favor ingrese sus datos")
+                else:
+                    usuario = self.user.get()
+                    clave = self.pas.get()
+                    if usuario == "jhon" and clave == "123":
+                        messagebox.showinfo(
+                            "Aviso", "Bienvenido al sistema")
+                        self.ven.destroy()
+                        sistema = SistemaPrincipal()
+            except Exception as error:
+                messagebox.showerror(
+                    "Error al abrir el sistema",
+                    f"No se pudo abrir la pantalla principal:\n{error}",
+                )
+
         self.boton_cerrar.place(relx=1, x=-8, y=8, anchor="ne")
 
         self.user = tk.StringVar()
@@ -126,6 +150,7 @@ class login(ttk.Frame):
             relief="flat",
             cursor="hand2",
             pady=10,
+            command=Ingresar
         )
         self.btnLogin.pack(fill="x", padx=34, pady=(28, 30))
 
